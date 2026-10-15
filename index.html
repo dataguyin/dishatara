@@ -100,9 +100,21 @@
           <p class="muted" data-en="Start with your birth details, explore a reading, and ask questions when you want to go deeper." data-hi="जन्म विवरण भरें, रीडिंग देखें और आगे समझने के लिए सवाल पूछें।">Start with your birth details, explore a reading, and ask questions when you want to go deeper.</p>
         </div>
         <div class="cards">
-          <article class="card"><div class="card-icon">☾</div><h3 data-en="Your birth profile" data-hi="आपकी जन्म जानकारी">Your birth profile</h3><p data-en="Share your birth date, time and place to prepare for a personalized chart." data-hi="व्यक्तिगत चार्ट के लिए जन्म तिथि, समय और स्थान भरें।">Share your birth date, time and place to prepare for a personalized chart.</p></article>
-          <article class="card"><div class="card-icon">✧</div><h3 data-en="Grounded insights" data-hi="चार्ट पर आधारित जानकारी">Grounded insights</h3><p data-en="The planned product will explain calculated chart details, rather than inventing planetary positions." data-hi="असली उत्पाद गणना किए गए चार्ट को समझाएगा, ग्रहों की स्थिति गढ़ेगा नहीं।">The planned product will explain calculated chart details, rather than inventing planetary positions.</p></article>
-          <article class="card"><div class="card-icon">☼</div><h3 data-en="Ask follow-up questions" data-hi="आगे के सवाल पूछें">Ask follow-up questions</h3><p data-en="A future AI companion will explain your chart in English, Hindi or Hinglish." data-hi="भविष्य का AI साथी आपकी कुंडली हिंदी, Hinglish या English में समझाएगा।">A future AI companion will explain your chart in English, Hindi or Hinglish.</p></article>
+          <article class="card">
+            <div class="card-icon">☾</div>
+            <h3 data-en="Your birth profile" data-hi="आपकी जन्म जानकारी">Your birth profile</h3>
+            <p data-en="Share your birth date, time and place to prepare for a personalized chart." data-hi="व्यक्तिगत चार्ट के लिए जन्म तिथि, समय और स्थान भरें।">Share your birth date, time and place to prepare for a personalized chart.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">✧</div>
+            <h3 data-en="Grounded insights" data-hi="चार्ट पर आधारित जानकारी">Grounded insights</h3>
+            <p data-en="The planned product will explain calculated chart details, rather than inventing planetary positions." data-hi="असली उत्पाद गणना किए गए चार्ट को समझाएगा, ग्रहों की स्थिति गढ़ेगा नहीं।">The planned product will explain calculated chart details, rather than inventing planetary positions.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">☼</div>
+            <h3 data-en="Ask follow-up questions" data-hi="आगे के सवाल पूछें">Ask follow-up questions</h3>
+            <p data-en="A future AI companion will explain your chart in English, Hindi or Hinglish." data-hi="भविष्य का AI साथी आपकी कुंडली हिंदी, Hinglish या English में समझाएगा।">A future AI companion will explain your chart in English, Hindi or Hinglish.</p>
+          </article>
         </div>
       </section>
 
@@ -116,26 +128,44 @@
         <div class="panel">
           <form id="birthForm">
             <div class="form-grid">
-              <div class="field"><label for="name" data-en="First name (optional)" data-hi="नाम (वैकल्पिक)">First name (optional)</label><input id="name" type="text" placeholder="e.g. Amit"></div>
-              <div class="field"><label for="dob" data-en="Date of birth" data-hi="जन्म तिथि">Date of birth</label><input id="dob" type="date" required></div>
-              <div class="field"><label for="time" data-en="Birth time" data-hi="जन्म समय">Birth time</label><input id="time" type="time" required></div>
-              <div class="field"><label for="place" data-en="Birthplace (city)" data-hi="जन्म स्थान (शहर)">Birthplace (city)</label><input id="place" type="text" placeholder="e.g. Delhi" required></div>
+              <div class="field">
+                <label for="name" data-en="First name (optional)" data-hi="नाम (वैकल्पिक)">First name (optional)</label>
+                <input id="name" type="text" placeholder="e.g. Amit" data-en-placeholder="e.g. Amit" data-hi-placeholder="जैसे, अमित">
+              </div>
+              <div class="field">
+                <label for="dob" data-en="Date of birth" data-hi="जन्म तिथि">Date of birth</label>
+                <input id="dob" type="date" required>
+              </div>
+              <div class="field">
+                <label for="time" data-en="Birth time" data-hi="जन्म समय">Birth time</label>
+                <input id="time" type="time" required>
+              </div>
+              <div class="field">
+                <label for="place" data-en="Birthplace (city)" data-hi="जन्म स्थान (शहर)">Birthplace (city)</label>
+                <input id="place" type="text" placeholder="e.g. Delhi" data-en-placeholder="e.g. Delhi" data-hi-placeholder="जैसे, दिल्ली" required>
+              </div>
               <div class="field wide">
                 <label for="language" data-en="Preferred language" data-hi="पसंदीदा भाषा">Preferred language</label>
-                <select id="language"><option>English</option><option>Hindi</option><option>Hinglish</option></select>
+                <select id="language">
+                  <option value="English" data-en="English" data-hi="अंग्रेज़ी">English</option>
+                  <option value="Hindi" data-en="Hindi" data-hi="हिंदी">Hindi</option>
+                  <option value="Hinglish" data-en="Hinglish" data-hi="हिंग्लिश">Hinglish</option>
+                </select>
               </div>
-              <div class="wide"><button type="submit" class="btn" data-en="Generate demo reading →" data-hi="डेमो रीडिंग देखें →">Generate demo reading →</button></div>
+              <div class="wide">
+                <button type="submit" class="btn" data-en="Generate demo reading →" data-hi="डेमो रीडिंग देखें →">Generate demo reading →</button>
+              </div>
             </div>
           </form>
 
           <div class="result" id="result">
-            <span class="pill">DEMO ONLY</span>
-            <h3 id="greeting">Your reflection begins here</h3>
+            <span class="pill" data-en="DEMO ONLY" data-hi="केवल डेमो">DEMO ONLY</span>
+            <h3 id="greeting" data-en="Your reflection begins here" data-hi="आपकी आत्म-चिंतन यात्रा यहाँ से शुरू होती है">Your reflection begins here</h3>
             <p class="muted" data-en="Your details remain in this page; this prototype does not send them to a server." data-hi="आपके विवरण इसी पेज पर रहते हैं; यह प्रोटोटाइप उन्हें सर्वर पर नहीं भेजता।">Your details remain in this page; this prototype does not send them to a server.</p>
             <div class="answer" data-en="A personalized reading will appear here once the verified chart engine is connected. This is a preview, not a real prediction." data-hi="सत्यापित चार्ट इंजन जुड़ने पर यहाँ व्यक्तिगत रीडिंग आएगी। अभी यह केवल डेमो है, वास्तविक भविष्यवाणी नहीं।">A personalized reading will appear here once the verified chart engine is connected. This is a preview, not a real prediction.</div>
             <h3 data-en="Ask DishaTara (demo)" data-hi="DishaTara से पूछें (डेमो)">Ask DishaTara (demo)</h3>
             <div class="chat">
-              <input type="text" id="question" placeholder="What would you like to understand?">
+              <input type="text" id="question" placeholder="What would you like to understand?" data-en-placeholder="What would you like to understand?" data-hi-placeholder="आप क्या समझना चाहते हैं?">
               <button type="button" class="btn" id="askBtn" data-en="Ask" data-hi="पूछें">Ask</button>
             </div>
             <div class="answer" id="answer" hidden></div>
@@ -145,27 +175,45 @@
     </main>
 
     <footer>
-      <p>✦ DishaTara · Ancient wisdom. Clear answers.</p>
-      <p>Prototype v0.10. Astrology is for reflection and entertainment. It does not guarantee outcomes and is not medical, legal, financial or mental-health advice. Do not enter sensitive information into this demo.</p>
+      <p data-en="✦ DishaTara · Ancient wisdom. Clear answers." data-hi="✦ DishaTara · प्राचीन ज्ञान। स्पष्ट दिशा।">✦ DishaTara · Ancient wisdom. Clear answers.</p>
+      <p data-en="Prototype v0.10. Astrology is for reflection and entertainment. It does not guarantee outcomes and is not medical, legal, financial or mental-health advice. Do not enter sensitive information into this demo."
+         data-hi="प्रोटोटाइप v0.10। ज्योतिष आत्म-चिंतन और मनोरंजन के लिए है। यह परिणामों की गारंटी नहीं देता और चिकित्सा, कानूनी, वित्तीय या मानसिक स्वास्थ्य सलाह का विकल्प नहीं है। इस डेमो में संवेदनशील जानकारी न भरें।">
+        Prototype v0.10. Astrology is for reflection and entertainment. It does not guarantee outcomes and is not medical, legal, financial or mental-health advice. Do not enter sensitive information into this demo.
+      </p>
     </footer>
   </div>
 
   <script>
     let isHindi = false;
 
-    document.getElementById("langBtn").addEventListener("click", function () {
-      isHindi = !isHindi;
+    function applyLanguage() {
       document.documentElement.lang = isHindi ? "hi" : "en";
-      this.textContent = isHindi ? "English" : "हिन्दी";
+      document.getElementById("langBtn").textContent = isHindi ? "English" : "हिन्दी";
+
       document.querySelectorAll("[data-en]").forEach(function (el) {
         el.innerHTML = isHindi ? el.dataset.hi : el.dataset.en;
       });
+
+      document.querySelectorAll("[data-en-placeholder]").forEach(function (el) {
+        el.placeholder = isHindi ? el.dataset.hiPlaceholder : el.dataset.enPlaceholder;
+      });
+    }
+
+    document.getElementById("langBtn").addEventListener("click", function () {
+      isHindi = !isHindi;
+      applyLanguage();
     });
 
     document.getElementById("birthForm").addEventListener("submit", function (event) {
       event.preventDefault();
+
       const name = document.getElementById("name").value.trim();
-      document.getElementById("greeting").textContent = name ? "A moment for you, " + name : "Your reflection begins here";
+      const greeting = document.getElementById("greeting");
+
+      greeting.textContent = name
+        ? (isHindi ? "आपके लिए एक खास पल, " + name : "A moment for you, " + name)
+        : (isHindi ? "आपकी आत्म-चिंतन यात्रा यहाँ से शुरू होती है" : "Your reflection begins here");
+
       document.getElementById("result").style.display = "block";
       document.getElementById("result").scrollIntoView({ behavior:"smooth", block:"start" });
     });
@@ -173,10 +221,15 @@
     document.getElementById("askBtn").addEventListener("click", function () {
       const question = document.getElementById("question").value.trim();
       const answer = document.getElementById("answer");
+
       answer.hidden = false;
-      answer.textContent = question
-        ? "This is a demo response. Once the verified chart engine and AI service are connected, DishaTara can answer questions grounded in your chart."
-        : "Type a question first. The demo does not connect to an AI service yet.";
+      answer.textContent = isHindi
+        ? (question
+          ? "यह डेमो उत्तर है। सत्यापित चार्ट इंजन और AI सेवा जुड़ने के बाद DishaTara आपकी कुंडली पर आधारित सवालों के जवाब दे सकेगा।"
+          : "पहले अपना सवाल लिखें। यह डेमो अभी AI सेवा से जुड़ा नहीं है।")
+        : (question
+          ? "This is a demo response. Once the verified chart engine and AI service are connected, DishaTara can answer questions grounded in your chart."
+          : "Type a question first. The demo does not connect to an AI service yet.");
     });
   </script>
 </body>
