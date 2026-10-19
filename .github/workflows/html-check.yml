@@ -1,3 +1,4 @@
+
 name: Validate HTML
 
 on:
@@ -13,6 +14,7 @@ jobs:
   validate:
     name: Validate HTML
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -22,5 +24,14 @@ jobs:
         with:
           node-version: 22
 
+      - name: Update npm
+        run: npm install --global npm@11.19.1
+
+      - name: Initialize npm project
+        run: npm init -y
+
+      - name: Install HTML validator
+        run: npm install --save-dev --save-exact html-validate@10.7.0
+
       - name: Validate the site
-        run: npx --yes html-validate@10.7.0 index.html
+        run: npx --no-install html-validate index.html

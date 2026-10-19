@@ -12,7 +12,7 @@
     html { scroll-behavior:smooth; }
     body { margin:0; color:var(--text); background:radial-gradient(ellipse at 75% 0%,#26345a,transparent 38%),var(--bg); font:16px/1.6 Arial,sans-serif; }
     .container { max-width:1100px; margin:auto; padding:0 22px; }
-    nav { height:76px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #ffffff18; }
+    nav { min-height:76px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #ffffff18; }
     .brand { display:flex; align-items:center; gap:10px; font-size:21px; font-weight:bold; }
     .logo { display:grid; place-items:center; width:40px; height:40px; border-radius:13px; background:linear-gradient(140deg,#f5dda0,#b58a45); color:#10172b; font-size:25px; }
     button,input,select { font:inherit; }
@@ -82,8 +82,8 @@
           <h1 data-en="Ancient wisdom.<br><span>Clear answers.</span>" data-hi="प्राचीन ज्ञान।<br><span>स्पष्ट दिशा।</span>">Ancient wisdom.<br><span>Clear answers.</span></h1>
           <p class="lead" data-en="Explore your cosmic story with a thoughtful, personal astrology experience — made for your questions, your language, and your journey." data-hi="अपने सवालों, अपनी भाषा और अपनी यात्रा के लिए व्यक्तिगत ज्योतिष अनुभव के साथ अपनी cosmic कहानी जानें।">Explore your cosmic story with a thoughtful, personal astrology experience — made for your questions, your language, and your journey.</p>
           <div class="actions">
-            <button type="button" class="btn" onclick="document.getElementById('birth').scrollIntoView()" data-en="Begin your reading →" data-hi="रीडिंग शुरू करें →">Begin your reading →</button>
-            <button type="button" class="btn secondary" onclick="document.getElementById('how').scrollIntoView()" data-en="How it works" data-hi="कैसे काम करता है">How it works</button>
+            <button type="button" class="btn" id="beginBtn" data-en="Begin your reading →" data-hi="रीडिंग शुरू करें →">Begin your reading →</button>
+            <button type="button" class="btn secondary" id="howBtn" data-en="How it works" data-hi="कैसे काम करता है">How it works</button>
           </div>
           <p class="small" data-en="For reflection and entertainment — not professional advice." data-hi="आत्म-चिंतन और मनोरंजन के लिए; पेशेवर सलाह का विकल्प नहीं।">For reflection and entertainment — not professional advice.</p>
         </div>
@@ -186,6 +186,27 @@
   <script>
     let isHindi = false;
 
+    const chatMessages = {
+      en: {
+        reply: "This is a demo response. Once the verified chart engine and AI service are connected, DishaTara can answer questions grounded in your chart.",
+        empty: "Type a question first. The demo does not connect to an AI service yet."
+      },
+      hi: {
+        reply: "यह डेमो उत्तर है। सत्यापित चार्ट इंजन और AI सेवा जुड़ने के बाद DishaTara आपकी कुंडली पर आधारित सवालों के जवाब दे सकेगा।",
+        empty: "पहले अपना सवाल लिखें। यह डेमो अभी AI सेवा से जुड़ा नहीं है।"
+      }
+    };
+
+    function updateChatLanguage() {
+      const answer = document.getElementById("answer");
+      const question = document.getElementById("question").value.trim();
+      const messages = isHindi ? chatMessages.hi : chatMessages.en;
+
+      if (!answer.hidden && answer.dataset.hasResponse === "true") {
+        answer.textContent = question ? messages.reply : messages.empty;
+      }
+    }
+
     function applyLanguage() {
       document.documentElement.lang = isHindi ? "hi" : "en";
       document.getElementById("langBtn").textContent = isHindi ? "English" : "हिन्दी";
@@ -197,11 +218,21 @@
       document.querySelectorAll("[data-en-placeholder]").forEach(function (el) {
         el.placeholder = isHindi ? el.dataset.hiPlaceholder : el.dataset.enPlaceholder;
       });
+
+      updateChatLanguage();
     }
 
     document.getElementById("langBtn").addEventListener("click", function () {
       isHindi = !isHindi;
       applyLanguage();
+    });
+
+    document.getElementById("beginBtn").addEventListener("click", function () {
+      document.getElementById("birth").scrollIntoView({ behavior: "smooth" });
+    });
+
+    document.getElementById("howBtn").addEventListener("click", function () {
+      document.getElementById("how").scrollIntoView({ behavior: "smooth" });
     });
 
     document.getElementById("birthForm").addEventListener("submit", function (event) {
@@ -215,21 +246,17 @@
         : (isHindi ? "आपकी आत्म-चिंतन यात्रा यहाँ से शुरू होती है" : "Your reflection begins here");
 
       document.getElementById("result").style.display = "block";
-      document.getElementById("result").scrollIntoView({ behavior:"smooth", block:"start" });
+      document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
     document.getElementById("askBtn").addEventListener("click", function () {
       const question = document.getElementById("question").value.trim();
       const answer = document.getElementById("answer");
+      const messages = isHindi ? chatMessages.hi : chatMessages.en;
 
       answer.hidden = false;
-      answer.textContent = isHindi
-        ? (question
-          ? "यह डेमो उत्तर है। सत्यापित चार्ट इंजन और AI सेवा जुड़ने के बाद DishaTara आपकी कुंडली पर आधारित सवालों के जवाब दे सकेगा।"
-          : "पहले अपना सवाल लिखें। यह डेमो अभी AI सेवा से जुड़ा नहीं है।")
-        : (question
-          ? "This is a demo response. Once the verified chart engine and AI service are connected, DishaTara can answer questions grounded in your chart."
-          : "Type a question first. The demo does not connect to an AI service yet.");
+      answer.dataset.hasResponse = "true";
+      answer.textContent = question ? messages.reply : messages.empty;
     });
   </script>
 </body>
