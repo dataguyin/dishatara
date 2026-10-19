@@ -183,54 +183,93 @@
     </footer>
   </div>
 
-  <script>
-    let isHindi = false;
+  
+<script>
+  let isHindi = false;
 
-    function applyLanguage() {
-      document.documentElement.lang = isHindi ? "hi" : "en";
-      document.getElementById("langBtn").textContent = isHindi ? "English" : "हिन्दी";
+  function applyLanguage() {
+    document.documentElement.lang = isHindi ? "hi" : "en";
 
-      document.querySelectorAll("[data-en]").forEach(function (el) {
-        el.innerHTML = isHindi ? el.dataset.hi : el.dataset.en;
-      });
+    const langButton = document.getElementById("langBtn");
+    langButton.textContent = isHindi ? "English" : "हिन्दी";
 
-      document.querySelectorAll("[data-en-placeholder]").forEach(function (el) {
-        el.placeholder = isHindi ? el.dataset.hiPlaceholder : el.dataset.enPlaceholder;
-      });
-    }
-
-    document.getElementById("langBtn").addEventListener("click", function () {
-      isHindi = !isHindi;
-      applyLanguage();
+    // Translate all elements that have bilingual text.
+    document.querySelectorAll("[data-en]").forEach(function (el) {
+      el.innerHTML = isHindi ? el.dataset.hi : el.dataset.en;
     });
 
-    document.getElementById("birthForm").addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const name = document.getElementById("name").value.trim();
-      const greeting = document.getElementById("greeting");
-
-      greeting.textContent = name
-        ? (isHindi ? "आपके लिए एक खास पल, " + name : "A moment for you, " + name)
-        : (isHindi ? "आपकी आत्म-चिंतन यात्रा यहाँ से शुरू होती है" : "Your reflection begins here");
-
-      document.getElementById("result").style.display = "block";
-      document.getElementById("result").scrollIntoView({ behavior:"smooth", block:"start" });
+    // Translate input placeholders.
+    document.querySelectorAll("[data-en-placeholder]").forEach(function (el) {
+      el.placeholder = isHindi
+        ? el.dataset.hiPlaceholder
+        : el.dataset.enPlaceholder;
     });
 
-    document.getElementById("askBtn").addEventListener("click", function () {
-      const question = document.getElementById("question").value.trim();
-      const answer = document.getElementById("answer");
+    // Update the existing demo chat response immediately.
+    const answer = document.getElementById("answer");
+    const question = document.getElementById("question").value.trim();
 
-      answer.hidden = false;
+    if (!answer.hidden && answer.textContent.trim()) {
       answer.textContent = isHindi
-        ? (question
-          ? "यह डेमो उत्तर है। सत्यापित चार्ट इंजन और AI सेवा जुड़ने के बाद DishaTara आपकी कुंडली पर आधारित सवालों के जवाब दे सकेगा।"
-          : "पहले अपना सवाल लिखें। यह डेमो अभी AI सेवा से जुड़ा नहीं है।")
-        : (question
-          ? "This is a demo response. Once the verified chart engine and AI service are connected, DishaTara can answer questions grounded in your chart."
-          : "Type a question first. The demo does not connect to an AI service yet.");
+        ? (
+            question
+              ? "यह डेमो उत्तर है। सत्यापित चार्ट इंजन और AI सेवा जुड़ने के बाद DishaTara आपकी कुंडली पर आधारित सवालों के जवाब दे सकेगा।"
+              : "पहले अपना सवाल लिखें। यह डेमो अभी AI सेवा से जुड़ा नहीं है।"
+          )
+        : (
+            question
+              ? "This is a demo response. Once the verified chart engine and AI service are connected, DishaTara can answer questions grounded in your chart."
+              : "Type a question first. The demo does not connect to an AI service yet."
+          );
+    }
+  }
+
+  // Language toggle.
+  document.getElementById("langBtn").addEventListener("click", function () {
+    isHindi = !isHindi;
+    applyLanguage();
+  });
+
+  // Demo birth form.
+  document.getElementById("birthForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const greeting = document.getElementById("greeting");
+
+    greeting.textContent = name
+      ? (isHindi ? "आपके लिए एक खास पल, " + name : "A moment for you, " + name)
+      : (isHindi
+          ? "आपकी आत्म-चिंतन यात्रा यहाँ से शुरू होती है"
+          : "Your reflection begins here");
+
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
     });
-  </script>
+  });
+
+  // Demo chat.
+  document.getElementById("askBtn").addEventListener("click", function () {
+    const question = document.getElementById("question").value.trim();
+    const answer = document.getElementById("answer");
+
+    answer.hidden = false;
+
+    answer.textContent = isHindi
+      ? (
+          question
+            ? "यह डेमो उत्तर है। सत्यापित चार्ट इंजन और AI सेवा जुड़ने के बाद DishaTara आपकी कुंडली पर आधारित सवालों के जवाब दे सकेगा।"
+            : "पहले अपना सवाल लिखें। यह डेमो अभी AI सेवा से जुड़ा नहीं है।"
+        )
+      : (
+          question
+            ? "This is a demo response. Once the verified chart engine and AI service are connected, DishaTara can answer questions grounded in your chart."
+            : "Type a question first. The demo does not connect to an AI service yet."
+        );
+  });
+</script>
+
 </body>
 </html>
