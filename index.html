@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,167 +6,504 @@
   <meta name="description" content="DishaTara — Ancient wisdom. Clear answers.">
   <title>DishaTara — Your AI Astrology Companion</title>
   <style>
-    :root { --bg:#0a1022; --panel:#131d37; --gold:#e8c780; --text:#f7f5ef; --muted:#b5bfd7; --line:#303c5b; }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body { margin:0; color:var(--text); background:radial-gradient(ellipse at 75% 0%,#26345a,transparent 38%),var(--bg); font:16px/1.6 Arial,sans-serif; }
-    .container { max-width:1100px; margin:auto; padding:0 22px; }
-    nav { min-height:76px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #ffffff18; }
-    .brand { display:flex; align-items:center; gap:10px; font-size:21px; font-weight:bold; }
-    .logo { display:grid; place-items:center; width:40px; height:40px; border-radius:13px; background:linear-gradient(140deg,#f5dda0,#b58a45); color:#10172b; font-size:25px; }
-    button,input,select { font:inherit; }
-    button { cursor:pointer; }
-    .btn { border:0; border-radius:999px; padding:13px 20px; background:linear-gradient(135deg,#f4dca0,#c49b55); color:#172039; font-weight:bold; }
-    .btn.secondary { color:var(--text); background:#ffffff08; border:1px solid var(--line); }
-    .lang { color:var(--text); background:transparent; border:1px solid var(--line); border-radius:999px; padding:9px 14px; }
-    .hero { display:grid; grid-template-columns:1.1fr .9fr; gap:35px; align-items:center; padding:70px 0 55px; }
-    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:2px; font-size:12px; font-weight:bold; }
-    h1 { font-size:clamp(42px,6vw,68px); line-height:1.05; letter-spacing:-2px; margin:16px 0; }
-    h1 span { color:var(--gold); }
-    .lead { color:var(--muted); font-size:18px; max-width:530px; }
-    .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
-    .small { font-size:12px; color:var(--muted); margin-top:14px; }
-    .cosmos { display:grid; place-items:center; min-height:330px; position:relative; }
-    .orbit { width:min(320px,75vw); aspect-ratio:1; border:1px solid #d8c38a80; border-radius:50%; display:grid; place-items:center; position:relative; box-shadow:0 0 70px #d4b16b12; }
-    .orbit::before,.orbit::after { content:""; position:absolute; border:1px solid #b7c2e344; border-radius:50%; inset:25px; }
-    .orbit::after { inset:60px; border-color:#d8c38a66; }
-    .sun { width:115px; height:115px; border-radius:50%; display:grid; place-items:center; background:radial-gradient(circle,#f9e8b9,#c7a35f 70%,#7e6032); box-shadow:0 0 60px #e8c78044; color:#26304d; font-size:50px; }
-    .star { position:absolute; color:var(--gold); font-size:24px; }
-    .s1 { top:10%; left:15%; }
-    .s2 { top:17%; right:9%; }
-    .s3 { bottom:12%; left:10%; }
-    .s4 { bottom:16%; right:15%; }
-    section { padding:45px 0; }
-    .section-head { text-align:center; max-width:680px; margin:0 auto 28px; }
-    h2 { font-size:32px; margin:8px 0; }
-    .muted { color:var(--muted); }
-    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-    .card,.panel { background:linear-gradient(145deg,#151f39,#10182d); border:1px solid var(--line); border-radius:20px; padding:23px; }
-    .card h3 { margin:12px 0 5px; }
-    .card p { color:var(--muted); font-size:14px; margin-bottom:0; }
-    .card-icon { font-size:25px; }
-    .panel { max-width:790px; margin:auto; padding:26px; }
-    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-    .field { display:flex; flex-direction:column; gap:7px; }
-    .field label { font-size:13px; color:#dce2f2; }
-    .field input,.field select,.chat input { width:100%; padding:12px; border:1px solid #34415f; background:#0b1328; color:var(--text); border-radius:11px; }
-    .wide { grid-column:1 / -1; }
-    .result { display:none; border-top:1px solid var(--line); margin-top:22px; padding-top:20px; }
-    .pill { display:inline-block; border-radius:99px; padding:4px 9px; background:var(--gold); color:#211b0d; font-size:11px; font-weight:bold; }
-    .answer { background:#0b1328; border:1px solid var(--line); border-radius:14px; padding:14px; margin-top:12px; }
-    .chat { display:flex; gap:9px; margin-top:12px; }
-    .chat input { flex:1; min-width:0; }
-    footer { margin-top:35px; padding:28px 0; border-top:1px solid #ffffff18; color:var(--muted); font-size:12px; }
-    @media (max-width:760px) {
-      .hero { grid-template-columns:1fr; padding-top:35px; gap:5px; }
-      .cosmos { min-height:260px; order:-1; }
-      .cards,.form-grid { grid-template-columns:1fr; }
-      .wide { grid-column:auto; }
-      h1 { letter-spacing:-1px; }
-      .panel { padding:18px; }
+    :root {
+      --bg: #0a1022;
+      --panel: #131d37;
+      --gold: #e8c780;
+      --text: #f7f5ef;
+      --muted: #b5bfd7;
+      --line: #303c5b;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: radial-gradient(ellipse at 75% 0%, #26345a, transparent 38%), var(--bg);
+      font: 16px/1.6 Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 22px;
+    }
+
+    nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ffffff18;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .logo {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      background: linear-gradient(140deg, #f5dda0, #b58a45);
+      color: #10172b;
+      font-size: 25px;
+    }
+
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      background: linear-gradient(135deg, #f4dca0, #c49b55);
+      color: #172039;
+      font-weight: bold;
+    }
+
+    .btn.secondary {
+      color: var(--text);
+      background: #ffffff08;
+      border: 1px solid var(--line);
+    }
+
+    .lang {
+      color: var(--text);
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 9px 14px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 35px;
+      align-items: center;
+      padding: 70px 0 55px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 68px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin: 16px 0;
+    }
+
+    h1 span { color: var(--gold); }
+
+    .lead {
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 530px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    .cosmos {
+      display: grid;
+      place-items: center;
+      min-height: 330px;
+      position: relative;
+    }
+
+    .orbit {
+      width: min(320px, 75vw);
+      aspect-ratio: 1;
+      border: 1px solid #d8c38a80;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      position: relative;
+      box-shadow: 0 0 70px #d4b16b12;
+    }
+
+    .orbit::before, .orbit::after {
+      content: "";
+      position: absolute;
+      border: 1px solid #b7c2e344;
+      border-radius: 50%;
+      inset: 25px;
+    }
+
+    .orbit::after {
+      inset: 60px;
+      border-color: #d8c38a66;
+    }
+
+    .sun {
+      width: 115px;
+      height: 115px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle, #f9e8b9, #c7a35f 70%, #7e6032);
+      box-shadow: 0 0 60px #e8c78044;
+      color: #26304d;
+      font-size: 50px;
+    }
+
+    .star {
+      position: absolute;
+      color: var(--gold);
+      font-size: 24px;
+    }
+
+    .s1 { top: 10%; left: 15%; }
+    .s2 { top: 17%; right: 9%; }
+    .s3 { bottom: 12%; left: 10%; }
+    .s4 { bottom: 16%; right: 15%; }
+
+    section { padding: 45px 0; }
+
+    .section-head {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 28px;
+    }
+
+    h2 {
+      font-size: 32px;
+      margin: 8px 0;
+    }
+
+    .muted { color: var(--muted); }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card, .panel {
+      background: linear-gradient(145deg, #151f39, #10182d);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 23px;
+    }
+
+    .card h3 { margin: 12px 0 5px; }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    .card-icon { font-size: 25px; }
+
+    .panel {
+      max-width: 790px;
+      margin: auto;
+      padding: 26px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field label {
+      font-size: 13px;
+      color: #dce2f2;
+    }
+
+    .field input, .field select, .chat input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #34415f;
+      background: #0b1328;
+      color: var(--text);
+      border-radius: 11px;
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    .result {
+      display: none;
+      border-top: 1px solid var(--line);
+      margin-top: 22px;
+      padding-top: 20px;
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 99px;
+      padding: 4px 9px;
+      background: var(--gold);
+      color: #211b0d;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .answer {
+      background: #0b1328;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .chat {
+      display: flex;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .chat input {
+      flex: 1;
+      min-width: 0;
+    }
+
+    footer {
+      margin-top: 35px;
+      padding: 28px 0;
+      border-top: 1px solid #ffffff18;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 35px;
+        gap: 5px;
+      }
+
+      .cosmos {
+        min-height: 260px;
+        order: -1;
+      }
+
+      .cards, .form-grid { grid-template-columns: 1fr; }
+      .wide { grid-column: auto; }
+      h1 { letter-spacing: -1px; }
+      .panel { padding: 18px; }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <nav>
-      <div class="brand"><div class="logo">✦</div>DishaTara</div>
-      <button type="button" class="lang" id="langBtn">हिन्दी</button>
+      <div class="brand">
+        <div class="logo">✦</div>
+        DishaTara
+      </div>
+      <button class="lang" id="langBtn" type="button">हिन्दी</button>
     </nav>
 
     <main>
       <section class="hero">
         <div>
-          <div class="eyebrow" data-en="Your AI astrology companion" data-hi="आपका AI ज्योतिष साथी">Your AI astrology companion</div>
-          <h1 data-en="Ancient wisdom.<br><span>Clear answers.</span>" data-hi="प्राचीन ज्ञान।<br><span>स्पष्ट दिशा।</span>">Ancient wisdom.<br><span>Clear answers.</span></h1>
-          <p class="lead" data-en="Explore your cosmic story with a thoughtful, personal astrology experience — made for your questions, your language, and your journey." data-hi="अपने सवालों, अपनी भाषा और अपनी यात्रा के लिए व्यक्तिगत ज्योतिष अनुभव के साथ अपनी cosmic कहानी जानें।">Explore your cosmic story with a thoughtful, personal astrology experience — made for your questions, your language, and your journey.</p>
+          <div class="eyebrow"
+               data-en="Your AI astrology companion"
+               data-hi="आपका AI ज्योतिष साथी">Your AI astrology companion</div>
+
+          <h1 data-en="Ancient wisdom.<br><span>Clear answers.</span>"
+              data-hi="प्राचीन ज्ञान।<br><span>स्पष्ट दिशा।</span>">
+            Ancient wisdom.<br><span>Clear answers.</span>
+          </h1>
+
+          <p class="lead"
+             data-en="Explore your cosmic story with a thoughtful, personal astrology experience — made for your questions, your language, and your journey."
+             data-hi="अपने सवालों, अपनी भाषा और अपनी यात्रा के लिए व्यक्तिगत ज्योतिष अनुभव के साथ अपनी cosmic कहानी जानें।">
+            Explore your cosmic story with a thoughtful, personal astrology experience — made for your questions, your language, and your journey.
+          </p>
+
           <div class="actions">
-            <button type="button" class="btn" id="beginBtn" data-en="Begin your reading →" data-hi="रीडिंग शुरू करें →">Begin your reading →</button>
-            <button type="button" class="btn secondary" id="howBtn" data-en="How it works" data-hi="कैसे काम करता है">How it works</button>
+            <button class="btn" type="button"
+                    onclick="document.getElementById('birth').scrollIntoView()"
+                    data-en="Begin your reading →"
+                    data-hi="रीडिंग शुरू करें →">Begin your reading →</button>
+
+            <button class="btn secondary" type="button"
+                    onclick="document.getElementById('how').scrollIntoView()"
+                    data-en="How it works"
+                    data-hi="कैसे काम करता है">How it works</button>
           </div>
-          <p class="small" data-en="For reflection and entertainment — not professional advice." data-hi="आत्म-चिंतन और मनोरंजन के लिए; पेशेवर सलाह का विकल्प नहीं।">For reflection and entertainment — not professional advice.</p>
+
+          <p class="small"
+             data-en="For reflection and entertainment — not professional advice."
+             data-hi="आत्म-चिंतन और मनोरंजन के लिए; पेशेवर सलाह का विकल्प नहीं।">
+            For reflection and entertainment — not professional advice.
+          </p>
         </div>
+
         <div class="cosmos" aria-hidden="true">
-          <span class="star s1">✧</span><span class="star s2">✦</span><span class="star s3">✧</span><span class="star s4">✦</span>
+          <span class="star s1">✧</span>
+          <span class="star s2">✦</span>
+          <span class="star s3">✧</span>
+          <span class="star s4">✦</span>
           <div class="orbit"><div class="sun">☼</div></div>
         </div>
       </section>
 
       <section id="how">
         <div class="section-head">
-          <div class="eyebrow" data-en="A little clarity, one step at a time" data-hi="धीरे-धीरे, थोड़ी और स्पष्टता">A little clarity, one step at a time</div>
-          <h2 data-en="Astrology that speaks your language" data-hi="आपकी भाषा में ज्योतिष">Astrology that speaks your language</h2>
-          <p class="muted" data-en="Start with your birth details, explore a reading, and ask questions when you want to go deeper." data-hi="जन्म विवरण भरें, रीडिंग देखें और आगे समझने के लिए सवाल पूछें।">Start with your birth details, explore a reading, and ask questions when you want to go deeper.</p>
+          <div class="eyebrow"
+               data-en="A little clarity, one step at a time"
+               data-hi="धीरे-धीरे, थोड़ी और स्पष्टता">A little clarity, one step at a time</div>
+
+          <h2 data-en="Astrology that speaks your language"
+              data-hi="आपकी भाषा में ज्योतिष">Astrology that speaks your language</h2>
+
+          <p class="muted"
+             data-en="Start with your birth details, explore a reading, and ask questions when you want to go deeper."
+             data-hi="जन्म विवरण भरें, रीडिंग देखें और आगे समझने के लिए सवाल पूछें।">
+            Start with your birth details, explore a reading, and ask questions when you want to go deeper.
+          </p>
         </div>
+
         <div class="cards">
           <article class="card">
             <div class="card-icon">☾</div>
             <h3 data-en="Your birth profile" data-hi="आपकी जन्म जानकारी">Your birth profile</h3>
-            <p data-en="Share your birth date, time and place to prepare for a personalized chart." data-hi="व्यक्तिगत चार्ट के लिए जन्म तिथि, समय और स्थान भरें।">Share your birth date, time and place to prepare for a personalized chart.</p>
+            <p data-en="Share your birth date, time and place to prepare for a personalized chart."
+               data-hi="व्यक्तिगत चार्ट के लिए जन्म तिथि, समय और स्थान भरें।">
+              Share your birth date, time and place to prepare for a personalized chart.
+            </p>
           </article>
+
           <article class="card">
             <div class="card-icon">✧</div>
             <h3 data-en="Grounded insights" data-hi="चार्ट पर आधारित जानकारी">Grounded insights</h3>
-            <p data-en="The planned product will explain calculated chart details, rather than inventing planetary positions." data-hi="असली उत्पाद गणना किए गए चार्ट को समझाएगा, ग्रहों की स्थिति गढ़ेगा नहीं।">The planned product will explain calculated chart details, rather than inventing planetary positions.</p>
+            <p data-en="The planned product will explain calculated chart details, rather than inventing planetary positions."
+               data-hi="असली उत्पाद गणना किए गए चार्ट को समझाएगा, ग्रहों की स्थिति गढ़ेगा नहीं।">
+              The planned product will explain calculated chart details, rather than inventing planetary positions.
+            </p>
           </article>
+
           <article class="card">
             <div class="card-icon">☼</div>
             <h3 data-en="Ask follow-up questions" data-hi="आगे के सवाल पूछें">Ask follow-up questions</h3>
-            <p data-en="A future AI companion will explain your chart in English, Hindi or Hinglish." data-hi="भविष्य का AI साथी आपकी कुंडली हिंदी, Hinglish या English में समझाएगा।">A future AI companion will explain your chart in English, Hindi or Hinglish.</p>
+            <p data-en="A future AI companion will explain your chart in English, Hindi or Hinglish."
+               data-hi="भविष्य का AI साथी आपकी कुंडली हिंदी, Hinglish या English में समझाएगा।">
+              A future AI companion will explain your chart in English, Hindi or Hinglish.
+            </p>
           </article>
         </div>
       </section>
 
       <section id="birth">
         <div class="section-head">
-          <div class="eyebrow" data-en="Try the prototype" data-hi="प्रोटोटाइप आज़माएँ">Try the prototype</div>
-          <h2 data-en="Start with your birth details" data-hi="जन्म विवरण से शुरू करें">Start with your birth details</h2>
-          <p class="muted" data-en="This prototype demonstrates the flow only. It does not calculate a real birth chart yet." data-hi="यह प्रोटोटाइप केवल अनुभव दिखाता है। अभी वास्तविक कुंडली की गणना नहीं करता।">This prototype demonstrates the flow only. It does not calculate a real birth chart yet.</p>
+          <div class="eyebrow" data-en="Try the prototype" data-hi="प्रोटोटाइप आज़माएँ">
+            Try the prototype
+          </div>
+
+          <h2 data-en="Start with your birth details"
+              data-hi="जन्म विवरण से शुरू करें">Start with your birth details</h2>
+
+          <p class="muted"
+             data-en="This prototype demonstrates the flow only. It does not calculate a real birth chart yet."
+             data-hi="यह प्रोटोटाइप केवल अनुभव दिखाता है। अभी वास्तविक कुंडली की गणना नहीं करता।">
+            This prototype demonstrates the flow only. It does not calculate a real birth chart yet.
+          </p>
         </div>
 
         <div class="panel">
           <form id="birthForm">
             <div class="form-grid">
               <div class="field">
-                <label for="name" data-en="First name (optional)" data-hi="नाम (वैकल्पिक)">First name (optional)</label>
-                <input id="name" type="text" placeholder="e.g. Amit" data-en-placeholder="e.g. Amit" data-hi-placeholder="जैसे, अमित">
+                <label for="name" data-en="First name (optional)" data-hi="नाम (वैकल्पिक)">
+                  First name (optional)
+                </label>
+                <input id="name" name="name" type="text" placeholder="e.g. Amit" autocomplete="given-name">
               </div>
+
               <div class="field">
                 <label for="dob" data-en="Date of birth" data-hi="जन्म तिथि">Date of birth</label>
-                <input id="dob" type="date" required>
+                <input id="dob" name="dob" type="date" required>
               </div>
+
               <div class="field">
                 <label for="time" data-en="Birth time" data-hi="जन्म समय">Birth time</label>
-                <input id="time" type="time" required>
+                <input id="time" name="time" type="time" required>
               </div>
+
               <div class="field">
                 <label for="place" data-en="Birthplace (city)" data-hi="जन्म स्थान (शहर)">Birthplace (city)</label>
-                <input id="place" type="text" placeholder="e.g. Delhi" data-en-placeholder="e.g. Delhi" data-hi-placeholder="जैसे, दिल्ली" required>
+                <input id="place" name="place" type="text" placeholder="e.g. Delhi" required>
               </div>
+
               <div class="field wide">
                 <label for="language" data-en="Preferred language" data-hi="पसंदीदा भाषा">Preferred language</label>
-                <select id="language">
-                  <option value="English" data-en="English" data-hi="अंग्रेज़ी">English</option>
-                  <option value="Hindi" data-en="Hindi" data-hi="हिंदी">Hindi</option>
-                  <option value="Hinglish" data-en="Hinglish" data-hi="हिंग्लिश">Hinglish</option>
+                <select id="language" name="language">
+                  <option>English</option>
+                  <option>Hindi</option>
+                  <option>Hinglish</option>
                 </select>
               </div>
+
               <div class="wide">
-                <button type="submit" class="btn" data-en="Generate demo reading →" data-hi="डेमो रीडिंग देखें →">Generate demo reading →</button>
+                <button class="btn" type="submit"
+                        data-en="Generate demo reading →"
+                        data-hi="डेमो रीडिंग देखें →">Generate demo reading →</button>
               </div>
             </div>
           </form>
 
           <div class="result" id="result">
-            <span class="pill" data-en="DEMO ONLY" data-hi="केवल डेमो">DEMO ONLY</span>
-            <h3 id="greeting" data-en="Your reflection begins here" data-hi="आपकी आत्म-चिंतन यात्रा यहाँ से शुरू होती है">Your reflection begins here</h3>
-            <p class="muted" data-en="Your details remain in this page; this prototype does not send them to a server." data-hi="आपके विवरण इसी पेज पर रहते हैं; यह प्रोटोटाइप उन्हें सर्वर पर नहीं भेजता।">Your details remain in this page; this prototype does not send them to a server.</p>
-            <div class="answer" data-en="A personalized reading will appear here once the verified chart engine is connected. This is a preview, not a real prediction." data-hi="सत्यापित चार्ट इंजन जुड़ने पर यहाँ व्यक्तिगत रीडिंग आएगी। अभी यह केवल डेमो है, वास्तविक भविष्यवाणी नहीं।">A personalized reading will appear here once the verified chart engine is connected. This is a preview, not a real prediction.</div>
-            <h3 data-en="Ask DishaTara (demo)" data-hi="DishaTara से पूछें (डेमो)">Ask DishaTara (demo)</h3>
-            <div class="chat">
-              <input type="text" id="question" placeholder="What would you like to understand?" data-en-placeholder="What would you like to understand?" data-hi-placeholder="आप क्या समझना चाहते हैं?">
-              <button type="button" class="btn" id="askBtn" data-en="Ask" data-hi="पूछें">Ask</button>
+            <span class="pill">DEMO ONLY</span>
+            <h3 id="greeting">Your reflection begins here</h3>
+
+            <p class="muted"
+               data-en="Your details remain in this page; this prototype does not send them to a server."
+               data-hi="आपके विवरण इसी पेज पर रहते हैं; यह प्रोटोटाइप उन्हें सर्वर पर नहीं भेजता।">
+              Your details remain in this page; this prototype does not send them to a server.
+            </p>
+
+            <div class="answer"
+                 data-en="A personalized reading will appear here once the verified chart engine is connected. This is a preview, not a real prediction."
+                 data-hi="सत्यापित चार्ट इंजन जुड़ने पर यहाँ व्यक्तिगत रीडिंग आएगी। अभी यह केवल डेमो है, वास्तविक भविष्यवाणी नहीं।">
+              A personalized reading will appear here once the verified chart engine is connected. This is a preview, not a real prediction.
             </div>
+
+            <h3 data-en="Ask DishaTara (demo)" data-hi="DishaTara से पूछें (डेमो)">
+              Ask DishaTara (demo)
+            </h3>
+
+            <div class="chat">
+              <input id="question" type="text" placeholder="What would you like to understand?">
+              <button class="btn" id="askBtn" type="button" data-en="Ask" data-hi="पूछें">Ask</button>
+            </div>
+
             <div class="answer" id="answer" hidden></div>
           </div>
         </div>
@@ -175,9 +511,8 @@
     </main>
 
     <footer>
-      <p data-en="✦ DishaTara · Ancient wisdom. Clear answers." data-hi="✦ DishaTara · प्राचीन ज्ञान। स्पष्ट दिशा।">✦ DishaTara · Ancient wisdom. Clear answers.</p>
-      <p data-en="Prototype v0.10. Astrology is for reflection and entertainment. It does not guarantee outcomes and is not medical, legal, financial or mental-health advice. Do not enter sensitive information into this demo."
-         data-hi="प्रोटोटाइप v0.10। ज्योतिष आत्म-चिंतन और मनोरंजन के लिए है। यह परिणामों की गारंटी नहीं देता और चिकित्सा, कानूनी, वित्तीय या मानसिक स्वास्थ्य सलाह का विकल्प नहीं है। इस डेमो में संवेदनशील जानकारी न भरें।">
+      <p>✦ DishaTara · Ancient wisdom. Clear answers.</p>
+      <p>
         Prototype v0.10. Astrology is for reflection and entertainment. It does not guarantee outcomes and is not medical, legal, financial or mental-health advice. Do not enter sensitive information into this demo.
       </p>
     </footer>
@@ -185,67 +520,77 @@
 
   <script>
     let isHindi = false;
-  
+
     const form = document.getElementById("birthForm");
     const dobInput = document.getElementById("dob");
     const result = document.getElementById("result");
     const greeting = document.getElementById("greeting");
     const questionInput = document.getElementById("question");
     const answer = document.getElementById("answer");
-  
-    // Prevent selecting a birth date in the future.
+
+    // Use the visitor's local date, not UTC, for the latest allowed birth date.
     const today = new Date();
     const localToday = [
       today.getFullYear(),
       String(today.getMonth() + 1).padStart(2, "0"),
       String(today.getDate()).padStart(2, "0")
     ].join("-");
-    dobInput.max = localToday;
-  
-    document.getElementById("langBtn").addEventListener("click", function () {
-      isHindi = !isHindi;
-      document.documentElement.lang = isHindi ? "hi" : "en";
-      this.textContent = isHindi ? "English" : "हिन्दी";
-  
-      document.querySelectorAll("[data-en]").forEach(function (element) {
-        element.innerHTML = isHindi
-          ? element.dataset.hi
-          : element.dataset.en;
-      });
-    });
-  
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-  
-      if (dobInput.value > localToday) {
+
+    function validateBirthDate() {
+      if (dobInput.value && dobInput.value > localToday) {
         dobInput.setCustomValidity(
           isHindi
             ? "कृपया आज या उससे पहले की जन्म तिथि चुनें।"
             : "Please choose today or an earlier birth date."
         );
-        dobInput.reportValidity();
+      } else {
+        dobInput.setCustomValidity("");
+      }
+    }
+
+    // The browser date picker will also prevent choosing a future date.
+    dobInput.max = localToday;
+    dobInput.addEventListener("input", validateBirthDate);
+    dobInput.addEventListener("change", validateBirthDate);
+
+    document.getElementById("langBtn").addEventListener("click", function () {
+      isHindi = !isHindi;
+      document.documentElement.lang = isHindi ? "hi" : "en";
+      this.textContent = isHindi ? "English" : "हिन्दी";
+
+      document.querySelectorAll("[data-en]").forEach(function (element) {
+        element.innerHTML = isHindi
+          ? element.dataset.hi
+          : element.dataset.en;
+      });
+
+      // Refresh a currently visible date error in the selected language.
+      validateBirthDate();
+    });
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      // Run validation again in case the date was filled by browser autofill.
+      validateBirthDate();
+
+      if (!form.reportValidity()) {
         return;
       }
-  
-      dobInput.setCustomValidity("");
-  
+
       const name = document.getElementById("name").value.trim();
-  
+
       greeting.textContent = name
         ? (isHindi ? `${name} के लिए एक पल` : `A moment for you, ${name}`)
         : (isHindi ? "आपका आत्म-चिंतन यहाँ से शुरू होता है" : "Your reflection begins here");
-  
+
       result.style.display = "block";
       result.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-  
-    dobInput.addEventListener("input", function () {
-      dobInput.setCustomValidity("");
-    });
-  
+
     function showDemoAnswer() {
       const question = questionInput.value.trim();
-  
+
       answer.hidden = false;
       answer.textContent = question
         ? (isHindi
@@ -255,15 +600,15 @@
             ? "पहले अपना सवाल लिखें। यह डेमो अभी AI सेवा से जुड़ा नहीं है।"
             : "Type a question first. This demo is not connected to an AI service yet.");
     }
-  
+
     document.getElementById("askBtn").addEventListener("click", showDemoAnswer);
-  
+
     questionInput.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
         event.preventDefault();
         showDemoAnswer();
       }
     });
-</script>
+  </script>
 </body>
 </html>
