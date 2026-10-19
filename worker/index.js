@@ -67,7 +67,7 @@ export default {
 
     if (request.method === "OPTIONS") {
       if (!origin || origin !== allowedOrigin) return new Response(null, { status: 403 });
-      return jsonResponse({}, 204, origin, allowedOrigin);
+      return jsonResponse({ ok: true }, 200, origin, allowedOrigin);
     }
 
     if (!origin || !allowedOrigin || origin !== allowedOrigin) {
