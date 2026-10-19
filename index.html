@@ -185,79 +185,85 @@
 
   <script>
     let isHindi = false;
-
-    const chatMessages = {
-      en: {
-        reply: "This is a demo response. Once the verified chart engine and AI service are connected, DishaTara can answer questions grounded in your chart.",
-        empty: "Type a question first. The demo does not connect to an AI service yet."
-      },
-      hi: {
-        reply: "यह डेमो उत्तर है। सत्यापित चार्ट इंजन और AI सेवा जुड़ने के बाद DishaTara आपकी कुंडली पर आधारित सवालों के जवाब दे सकेगा।",
-        empty: "पहले अपना सवाल लिखें। यह डेमो अभी AI सेवा से जुड़ा नहीं है।"
-      }
-    };
-
-    function updateChatLanguage() {
-      const answer = document.getElementById("answer");
-      const question = document.getElementById("question").value.trim();
-      const messages = isHindi ? chatMessages.hi : chatMessages.en;
-
-      if (!answer.hidden && answer.dataset.hasResponse === "true") {
-        answer.textContent = question ? messages.reply : messages.empty;
-      }
-    }
-
-    function applyLanguage() {
-      document.documentElement.lang = isHindi ? "hi" : "en";
-      document.getElementById("langBtn").textContent = isHindi ? "English" : "हिन्दी";
-
-      document.querySelectorAll("[data-en]").forEach(function (el) {
-        el.innerHTML = isHindi ? el.dataset.hi : el.dataset.en;
-      });
-
-      document.querySelectorAll("[data-en-placeholder]").forEach(function (el) {
-        el.placeholder = isHindi ? el.dataset.hiPlaceholder : el.dataset.enPlaceholder;
-      });
-
-      updateChatLanguage();
-    }
-
+  
+    const form = document.getElementById("birthForm");
+    const dobInput = document.getElementById("dob");
+    const result = document.getElementById("result");
+    const greeting = document.getElementById("greeting");
+    const questionInput = document.getElementById("question");
+    const answer = document.getElementById("answer");
+  
+    // Prevent selecting a birth date in the future.
+    const today = new Date();
+    const localToday = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, "0"),
+      String(today.getDate()).padStart(2, "0")
+    ].join("-");
+    dobInput.max = localToday;
+  
     document.getElementById("langBtn").addEventListener("click", function () {
       isHindi = !isHindi;
-      applyLanguage();
+      document.documentElement.lang = isHindi ? "hi" : "en";
+      this.textContent = isHindi ? "English" : "हिन्दी";
+  
+      document.querySelectorAll("[data-en]").forEach(function (element) {
+        element.innerHTML = isHindi
+          ? element.dataset.hi
+          : element.dataset.en;
+      });
     });
-
-    document.getElementById("beginBtn").addEventListener("click", function () {
-      document.getElementById("birth").scrollIntoView({ behavior: "smooth" });
-    });
-
-    document.getElementById("howBtn").addEventListener("click", function () {
-      document.getElementById("how").scrollIntoView({ behavior: "smooth" });
-    });
-
-    document.getElementById("birthForm").addEventListener("submit", function (event) {
+  
+    form.addEventListener("submit", function (event) {
       event.preventDefault();
-
+  
+      if (dobInput.value > localToday) {
+        dobInput.setCustomValidity(
+          isHindi
+            ? "कृपया आज या उससे पहले की जन्म तिथि चुनें।"
+            : "Please choose today or an earlier birth date."
+        );
+        dobInput.reportValidity();
+        return;
+      }
+  
+      dobInput.setCustomValidity("");
+  
       const name = document.getElementById("name").value.trim();
-      const greeting = document.getElementById("greeting");
-
+  
       greeting.textContent = name
-        ? (isHindi ? "आपके लिए एक खास पल, " + name : "A moment for you, " + name)
-        : (isHindi ? "आपकी आत्म-चिंतन यात्रा यहाँ से शुरू होती है" : "Your reflection begins here");
-
-      document.getElementById("result").style.display = "block";
-      document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start" });
+        ? (isHindi ? `${name} के लिए एक पल` : `A moment for you, ${name}`)
+        : (isHindi ? "आपका आत्म-चिंतन यहाँ से शुरू होता है" : "Your reflection begins here");
+  
+      result.style.display = "block";
+      result.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-
-    document.getElementById("askBtn").addEventListener("click", function () {
-      const question = document.getElementById("question").value.trim();
-      const answer = document.getElementById("answer");
-      const messages = isHindi ? chatMessages.hi : chatMessages.en;
-
+  
+    dobInput.addEventListener("input", function () {
+      dobInput.setCustomValidity("");
+    });
+  
+    function showDemoAnswer() {
+      const question = questionInput.value.trim();
+  
       answer.hidden = false;
-      answer.dataset.hasResponse = "true";
-      answer.textContent = question ? messages.reply : messages.empty;
+      answer.textContent = question
+        ? (isHindi
+            ? "यह केवल डेमो उत्तर है। अभी DishaTara वास्तविक कुंडली नहीं बनाता और AI सेवा से जुड़ा नहीं है।"
+            : "This is a demo response. DishaTara does not yet create a real birth chart or connect to an AI service.")
+        : (isHindi
+            ? "पहले अपना सवाल लिखें। यह डेमो अभी AI सेवा से जुड़ा नहीं है।"
+            : "Type a question first. This demo is not connected to an AI service yet.");
+    }
+  
+    document.getElementById("askBtn").addEventListener("click", showDemoAnswer);
+  
+    questionInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        showDemoAnswer();
+      }
     });
-  </script>
+</script>
 </body>
 </html>
